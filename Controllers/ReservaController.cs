@@ -18,16 +18,7 @@ namespace AeroApi.Controllers
         [HttpPost]
         public IActionResult EfetuarReserva(EfetuarReservaRequest request)
         {
-            var reserva = new Reserva();
-            reserva.Id = Id;
-            Id++;
-            reserva.Documento = request.Documento;
-            reserva.Poltrona = request.Poltrona;
-            reserva.VooId = request.VooId;
-
-            Reservas.Add(reserva);
-
-            return Ok(reserva);
+            return null;
         }
 
 
