@@ -27,7 +27,12 @@ namespace AeroApi.Model
 
         public TimeSpan TempoVolta { get; set; }
 
-
         public double Preco { get; set; }
+
+        public string Classe { get; set; }
+
+        public int QtdPassageiros { get; set; }
+
+       
     }
 }
