@@ -11,7 +11,7 @@ namespace AeroApi.Model
     {
         public DbSet<Local> Locais { get; set; }
 
-       public  DbSet<Reserva> Reservas { get; set; }
+        public  DbSet<Reserva> Reservas { get; set; }
 
         public DbSet<Voo> Voos { get; set; }
 

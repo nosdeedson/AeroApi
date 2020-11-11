@@ -80,6 +80,9 @@ namespace AeroApi.Migrations
                     b.Property<double>("Preco")
                         .HasColumnType("double");
 
+                    b.Property<int>("QtdPassageiros")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("TempoIda")
                         .HasColumnType("time");
 

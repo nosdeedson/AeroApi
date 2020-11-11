@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace AeroApi.Migrations
 {
-    public partial class CriacaoInicialBanco : Migration
+    public partial class migrationInicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +35,8 @@ namespace AeroApi.Migrations
                     NumeroParadas = table.Column<int>(nullable: false),
                     TempoIda = table.Column<TimeSpan>(nullable: false),
                     TempoVolta = table.Column<TimeSpan>(nullable: false),
-                    Preco = table.Column<double>(nullable: false)
+                    Preco = table.Column<double>(nullable: false),
+                    QtdPassageiros = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

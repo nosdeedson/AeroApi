@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace AeroApi.DTO
 {
-    public class VooDTO
-    { //LocalOrigem/LocalDestino/DataIda/DataVolta/Classe/qtdPassageiro
-
+    public class FiltroVooDTO
+    {
         public int LocalOrigemID { get; set; }
 
         public int LocalDestinoID { get; set; }
@@ -17,14 +16,6 @@ namespace AeroApi.DTO
         public DateTime DataVolta { get; set; }
 
         public int QtdPassageiroDTO { get; set; }
-
-        public int NumeroParadas { get; set; }
-
-        public TimeSpan TempoVolta { get; set; }
-
-        public TimeSpan TempoIda { get; set; }
-
-        public double Preco { get; set; }
 
     }
 }

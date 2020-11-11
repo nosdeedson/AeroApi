@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AeroApi.Migrations
 {
     [DbContext(typeof(AeroContext))]
-    [Migration("20201030124401_CriacaoInicialBanco")]
-    partial class CriacaoInicialBanco
+    [Migration("20201110100859_migrationInicial")]
+    partial class migrationInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,6 +81,9 @@ namespace AeroApi.Migrations
 
                     b.Property<double>("Preco")
                         .HasColumnType("double");
+
+                    b.Property<int>("QtdPassageiros")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("TempoIda")
                         .HasColumnType("time");

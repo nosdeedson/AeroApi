@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AeroApi.Model;
 using AeroApi.DTO;
-using Microsoft.AspNetCore.Razor.Language;
 
 namespace AeroApi.Controllers
 {
@@ -16,7 +15,6 @@ namespace AeroApi.Controllers
     public class VoosController : ControllerBase
     {
         private readonly AeroContext _context;
-        private Task<Voo[]> voos;
 
         public VoosController(AeroContext context)
         {
@@ -25,95 +23,38 @@ namespace AeroApi.Controllers
 
         // GET: api/Voos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Voo>>> GetVoos()
+        public IActionResult GetVoos()
         {
-            return await _context.Voos.ToListAsync();
+            return Ok(Converter(_context.Voos.ToList()));
         }
 
-        // GET: api/Voos/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Voo>> GetVoo(int id)
+
+        // GET: api/Voos
+        [HttpGet("comFiltro")]
+        public ActionResult<IEnumerable<dynamic>> GetVoosFiltro([ FromQuery] FiltroVooDTO filtro)
         {
-            var voo = await _context.Voos.FindAsync(id);
+            var listaRetorno = _context.Voos.Where(item => item.DataIda >= filtro.DataIda &&
+            item.DataVolta <= filtro.DataVolta && item.QtdPassageiros >  filtro.QtdPassageiroDTO &&
+            item.LocalDestinoId == filtro.LocalDestinoID && item.LocalOrigemId == filtro.LocalOrigemID ).ToList();
 
-            if (voo == null)
-            {
-                return NotFound();
-            }
-
-            return voo;
+            return Ok(Converter(listaRetorno));
         }
 
-        //GET: api/Voos/LocalOrigem/LocalDestino/DataIda/DataVolta/Classe/qtdPassageiro
-        [HttpPost]
-        public  Task<ActionResult<IEnumerable<Voo>>> GetVoosReserva(VooDTO vooDTO)
+       private IEnumerable<dynamic> Converter(List<Voo> lista)
         {
-            return  null;
+           return lista.Select( item => new {
+                item.Id,
+                item.DataIda,
+                item.DataVolta,
+                item.TempoIda,
+                item.TempoVolta,
+                item.LocalOrigemId,
+                item.LocalDestinoId,
+                item.NumeroParadas,
+                item.Preco
+            } ).ToList();
         }
 
-        // PUT: api/Voos/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutVoo(int id, Voo voo)
-        {
-            if (id != voo.Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(voo).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VooExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Voos
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Voo>> PostVoo(Voo voo)
-        {
-            _context.Voos.Add(voo);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetVoo", new { id = voo.Id }, voo);
-        }
-
-        // DELETE: api/Voos/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Voo>> DeleteVoo(int id)
-        {
-            var voo = await _context.Voos.FindAsync(id);
-            if (voo == null)
-            {
-                return NotFound();
-            }
-
-            _context.Voos.Remove(voo);
-            await _context.SaveChangesAsync();
-
-            return voo;
-        }
-
-        private bool VooExists(int id)
-        {
-            return _context.Voos.Any(e => e.Id == id);
-        }
     }
 }
